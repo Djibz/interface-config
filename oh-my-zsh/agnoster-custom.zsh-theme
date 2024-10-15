@@ -100,7 +100,7 @@ prompt_context() {
 
 # time
 prompt_time() {
-    prompt_segment "#c89dbf" black "%D{%L:%M}"
+    prompt_segment "#c89dbf" black "%D{%k:%M}"
 }
 
 
