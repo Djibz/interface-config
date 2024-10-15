@@ -54,6 +54,7 @@ esac
   # escape sequence with a single literal character.
   # Do not change this! Do not make it '\u2b80'; that is the old, wrong code point.
   SEGMENT_SEPARATOR=$'\ue0b4'
+  SEGMENT_SEPARATOR_REV=$'\ue0b6'
 }
 
 # Begin a segment
@@ -83,13 +84,17 @@ prompt_end() {
   CURRENT_BG=''
 }
 
+prompt_begin() {
+  echo -n " %{%k%F{#c89dbf}%}$SEGMENT_SEPARATOR_REV"
+}
+
 ### Prompt components
 # Each component will draw itself, and hide itself if no information needs to be shown
 
 # Context: user@hostname (who am I and where am I)
 prompt_context() {
   if [[ "$USERNAME" != "$DEFAULT_USER" || -n "$SSH_CLIENT" ]]; then
-    prompt_segment black default "%(!.%{%F{yellow}%}.)%n"
+    prompt_segment "#33b165" default "%(!.%{%F{yellow}%}.)%n"
   fi
 }
 
@@ -263,10 +268,10 @@ prompt_aws() {
 ## Main prompt
 build_prompt() {
   RETVAL=$?
+  prompt_begin
   prompt_status
   prompt_virtualenv
   prompt_aws
-  prompt_context
   prompt_time
   prompt_dir
   prompt_git
